@@ -13,12 +13,21 @@ request.onsuccess = function(event) {
     db = event.target.result;
   
     // check if app is online, if yes run checkDatabase() function to send all local db data to api
-    if (navigator.onLine) {
-      uploadPizza();
-    }
+    // if (navigator.onLine) {
+    //   uploadPizza();
+    // }
   };
   
   request.onerror = function(event) {
     // log error here
     console.log(event.target.errorCode);
   };
+
+function saveRecord(record) {
+    const transaction = db.transaction(['new_pizza'], 'readwrite');
+  
+    const pizzaObjectStore = transaction.objectStore('new_pizza');
+  
+    // add record to your store with add method.
+    pizzaObjectStore.add(record);
+  }
